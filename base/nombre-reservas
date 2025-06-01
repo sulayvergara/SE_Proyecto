@@ -1,0 +1,69 @@
+CREATE TABLE roles (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) UNIQUE NOT NULL,
+    contraseña TEXT NOT NULL,
+    rol_id INT REFERENCES roles(id)
+);
+
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    documento_identidad VARCHAR(20) NOT NULL UNIQUE,
+    correo VARCHAR(100),
+    telefono VARCHAR(20)
+);
+
+CREATE TABLE habitaciones (
+    id SERIAL PRIMARY KEY,
+    numero VARCHAR(10) UNIQUE NOT NULL,
+    tipo VARCHAR(50) NOT NULL,  -- ej: simple, doble, suite
+    precio_noche NUMERIC(10,2) NOT NULL,
+    estado VARCHAR(20) DEFAULT 'disponible'  -- disponible, ocupada, mantenimiento
+);
+
+CREATE TABLE reservas (
+    id SERIAL PRIMARY KEY,
+    cliente_id INT REFERENCES clientes(id),
+    habitacion_id INT REFERENCES habitaciones(id),
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    estado VARCHAR(20) DEFAULT 'reservada',  -- reservada, cancelada, completada
+    fecha_reserva TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE facturas (
+    id SERIAL PRIMARY KEY,
+    reserva_id INT REFERENCES reservas(id),
+    fecha_emision DATE NOT NULL,
+    total NUMERIC(10,2) NOT NULL,
+    estado VARCHAR(20) DEFAULT 'pendiente' -- pagada, pendiente, anulada
+);
+
+CREATE TABLE pagos (
+    id SERIAL PRIMARY KEY,
+    factura_id INT REFERENCES facturas(id),
+    fecha_pago DATE NOT NULL,
+    monto NUMERIC(10,2) NOT NULL,
+    metodo_pago VARCHAR(50) NOT NULL -- efectivo, tarjeta, etc.
+);
+
+CREATE TABLE ingresos (
+    id SERIAL PRIMARY KEY,
+    reserva_id INT REFERENCES reservas(id),
+    monto NUMERIC(10,2) NOT NULL,
+    descripcion TEXT,
+    fecha DATE DEFAULT CURRENT_DATE
+);
+
+CREATE TABLE egresos (
+    id SERIAL PRIMARY KEY,
+    descripcion TEXT NOT NULL,
+    monto NUMERIC(10,2) NOT NULL,
+    fecha DATE DEFAULT CURRENT_DATE
+);
