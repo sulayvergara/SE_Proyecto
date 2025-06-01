@@ -8,22 +8,22 @@ from typing import List
 
 router = APIRouter()
 
-@router.post("/habitaciones/", response_model=HabitacionOut)
+@router.post("/habitaciones/", response_model=HabitacionOut, tags=["Habitaciones"])
 async def crear_habitacion(habitacion: HabitacionCreate, db: AsyncSession = Depends(get_async_session)):
     return await crud_habitacion.crear_habitacion(db, habitacion)
 
-@router.get("/habitaciones/", response_model=List[HabitacionOut])
+@router.get("/habitaciones/", response_model=List[HabitacionOut], tags=["Habitaciones"])
 async def listar_habitaciones(db: AsyncSession = Depends(get_async_session)):
     return await crud_habitacion.obtener_habitaciones(db)
 
-@router.get("/habitaciones/{habitacion_id}", response_model=HabitacionOut)
+@router.get("/habitaciones/{habitacion_id}", response_model=HabitacionOut, tags=["Habitaciones"])
 async def obtener_habitacion(habitacion_id: int, db: AsyncSession = Depends(get_async_session)):
     habitacion = await crud_habitacion.obtener_habitacion_por_id(db, habitacion_id)
     if not habitacion:
         raise HTTPException(status_code=404, detail="Habitación no encontrada")
     return habitacion
 
-@router.put("/habitaciones/{habitacion_id}/estado", response_model=HabitacionOut)
+@router.put("/habitaciones/{habitacion_id}/estado", response_model=HabitacionOut, tags=["Habitaciones"])
 async def actualizar_estado(habitacion_id: int, nuevo_estado: str, db: AsyncSession = Depends(get_async_session)):
     habitacion = await crud_habitacion.actualizar_estado_habitacion(db, habitacion_id, nuevo_estado)
     if not habitacion:
