@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from app.database import engine, Base
 from app.routers import habitacion
-#from app.routers import cliente
+from app.routers import cliente
 
 app = FastAPI(title="Sistema de Reservas de Hoteles")
 
