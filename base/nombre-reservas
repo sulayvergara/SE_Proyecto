@@ -67,3 +67,54 @@ CREATE TABLE egresos (
     monto NUMERIC(10,2) NOT NULL,
     fecha DATE DEFAULT CURRENT_DATE
 );
+
+
+--Vistas para los Reportes
+
+CREATE OR REPLACE VIEW vista_libro_diario AS
+SELECT 
+    fecha,
+    'Ingreso' AS tipo,
+    descripcion,
+    monto
+FROM ingresos
+UNION ALL
+SELECT 
+    fecha,
+    'Egreso' AS tipo,
+    descripcion,
+    monto
+FROM egresos
+ORDER BY fecha;
+
+
+CREATE OR REPLACE VIEW vista_registro_huespedes AS
+SELECT 
+    c.nombre AS cliente,
+    c.documento_identidad,
+    c.correo,
+    c.telefono,
+    r.fecha_inicio,
+    r.fecha_fin,
+    h.numero AS habitacion,
+    h.tipo AS tipo_habitacion,
+    r.estado AS estado_reserva
+FROM reservas r
+JOIN clientes c ON r.cliente_id = c.id
+JOIN habitaciones h ON r.habitacion_id = h.id
+ORDER BY r.fecha_inicio;
+
+
+CREATE OR REPLACE VIEW vista_registro_ocupacion AS
+SELECT 
+    h.numero AS habitacion,
+    h.tipo,
+    r.fecha_inicio,
+    r.fecha_fin,
+    r.estado AS estado_reserva,
+    c.nombre AS cliente
+FROM reservas r
+JOIN habitaciones h ON r.habitacion_id = h.id
+JOIN clientes c ON r.cliente_id = c.id
+WHERE r.estado IN ('reservada', 'completada')
+ORDER BY h.numero, r.fecha_inicio;
