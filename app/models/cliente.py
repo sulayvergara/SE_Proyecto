@@ -15,12 +15,3 @@ class Cliente(Base):
     reservas = relationship("Reserva", back_populates="cliente")
 
 
-class Reserva(Base):
-    __tablename__ = "reservas"
-
-    id = Column(Integer, primary_key=True, index=True)
-    cliente_id = Column(Integer, ForeignKey("clientes.id"), nullable=False)
-    fecha_reserva = Column(DateTime, default=datetime.utcnow)
-    detalle = Column(Text)
-
-    cliente = relationship("Cliente", back_populates="reservas")

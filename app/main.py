@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.database import engine, Base
 from app.routers import habitacion
+#from app.routers import cliente
 from app.routers import cliente
 
 app = FastAPI(title="Sistema de Reservas de Hoteles")
@@ -17,4 +18,4 @@ async def root():
     return {"mensaje": "¡Bienvenido al Sistema de Reservas!"}
 
 app.include_router(habitacion.router)
-#app.include_router(cliente.router)
+app.include_router(cliente.router)

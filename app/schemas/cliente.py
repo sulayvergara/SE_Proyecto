@@ -13,7 +13,7 @@ class ClienteCreate(ClienteBase):
 
 class Cliente(ClienteBase):
     id: int
-    reservas: List[Reserva] = []
+    #reservas: List[reservas] = []
 
     class Config:
         orm_mode = True
