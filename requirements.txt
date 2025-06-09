@@ -14,8 +14,10 @@ python-dotenv
 
 #INstalar dependencias
 #pip install -r requirements.txt
-
+#pip install pydantic[email]  
 #Levantar el servidor
 #uvicorn app.main:app --reload
 
 #Conectar con documentacion Swagger en http://127.0.0.1:8000/docs y Redoc en http://127.0.0.1:8000/redoc.
+
+#pip install pydantic[email]   (para usuario)
