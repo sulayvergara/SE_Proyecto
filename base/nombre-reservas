@@ -68,6 +68,17 @@ CREATE TABLE egresos (
     fecha DATE DEFAULT CURRENT_DATE
 );
 
+CREATE TABLE cuentas (
+    id SERIAL PRIMARY KEY,
+    codigo VARCHAR(100) NOT NULL UNIQUE,
+    nombre VARCHAR(100) NOT NULL,
+    tipo VARCHAR(20) NOT NULL,  -- Ej: activo, pasivo, ingreso, gasto
+    nivel INT NOT NULL);
+
+INSERT INTO cuentas (codigo, nombre, tipo, nivel) VALUES
+('09999', 'ACTIVOS', 'activo', 1),
+('08888', 'ACTIVO CORRIENTE', 'activo', 2);
+
 
 --Vistas para los Reportes
 
