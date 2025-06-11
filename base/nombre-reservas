@@ -73,7 +73,8 @@ CREATE TABLE cuentas (
     codigo VARCHAR(100) NOT NULL UNIQUE,
     nombre VARCHAR(100) NOT NULL,
     tipo VARCHAR(20) NOT NULL,  -- Ej: activo, pasivo, ingreso, gasto
-    nivel INT NOT NULL);
+    nivel INT NOT NULL
+);
 
 INSERT INTO cuentas (codigo, nombre, tipo, nivel) VALUES
 ('09999', 'ACTIVOS', 'activo', 1),
@@ -82,7 +83,7 @@ INSERT INTO cuentas (codigo, nombre, tipo, nivel) VALUES
 
 --Vistas para los Reportes
 
-CREATE OR REPLACE VIEW vista_libro_diario AS
+CREATE OR REPLACE VIEW vistadellibro_diario AS
 SELECT 
     fecha,
     'Ingreso' AS tipo,
@@ -99,7 +100,7 @@ FROM egresos
 ORDER BY fecha;
 
 
-CREATE OR REPLACE VIEW vista_registro_huespedes AS
+CREATE OR REPLACE VIEW vistadelregistro_huespedes AS
 SELECT 
     c.nombre AS cliente,
     c.documento_identidad,
@@ -116,7 +117,7 @@ JOIN habitaciones h ON r.habitacion_id = h.id
 ORDER BY r.fecha_inicio;
 
 
-CREATE OR REPLACE VIEW vista_registro_ocupacion AS
+CREATE OR REPLACE VIEW vistadelregistro_ocupacion AS
 SELECT 
     h.numero AS habitacion,
     h.tipo,
