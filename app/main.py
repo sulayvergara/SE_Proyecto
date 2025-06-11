@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.database import engine, Base
-from app.routers import habitacion, cliente, reserva, ingresos, egresos,usuario,cuenta
+from app.routers import habitacion, cliente, reserva, ingresos, egresos,usuario,cuenta,parametro,reportes
 
 
 app = FastAPI(title="Sistema de Reservas de Hoteles")
@@ -18,8 +18,10 @@ async def root():
 
 app.include_router(usuario.router)
 app.include_router(cuenta.router)
+app.include_router(parametro.router)    
 app.include_router(habitacion.router)
 app.include_router(cliente.router)
 app.include_router(reserva.router)
 app.include_router(ingresos.router)
 app.include_router(egresos.router)
+app.include_router(reportes.router)
